@@ -1,0 +1,90 @@
+{
+  "Restaurant Retrieval Agent": {
+    "restaurants": [
+      {
+        "Country": "Spain",
+        "City": "Barcelona",
+        "RestaurantName": "Cal Pep",
+        "TypeOfCuisine": "Spanish",
+        "MealsServed": "Lunch, Dinner",
+        "RecommendedDish": "Gambas al Ajillo",
+        "MealDescription": "Garlic shrimp with a side of crusty bread",
+        "AvgPricePerPersonInUSD": "$20-$40",
+        "BudgetRange": "Moderate to Expensive",
+        "Suitability": "Romantic"
+      },
+      {
+        "Country": "Spain",
+        "City": "Barcelona",
+        "RestaurantName": "Street Stall - Eixample",
+        "TypeOfCuisine": "Spanish",
+        "MealsServed": "Breakfast, Lunch, Dinner",
+        "RecommendedDish": "Patatas Bravas",
+        "MealDescription": "Spicy fried potatoes with a side of garlic mayonnaise",
+        "AvgPricePerPersonInUSD": "$15-$30",
+        "BudgetRange": "Moderate",
+        "Suitability": "Casual"
+      }
+    ]
+  },
+  "Senior RAG Retrieval Agent": {
+    "activities": [
+      {
+        "Country": "Egypt",
+        "City": "Alexandria",
+        "Activity": "White and Blue (The Greek Club)",
+        "Description": "Dine on the waterfront with the best seafood, including grilled calamari and seafood soup.",
+        "TypeOfTraveler": "",
+        "Duration": "",
+        "BudgetInUSD": "",
+        "BudgetDetails": "",
+        "TipsAndRecommendations": "Make a reservation for a table with a view. The seafood dishes are a must-try.",
+        "For": "",
+        "FamilyFriendly": "",
+        "Category": ""
+      },
+      {
+        "Country": "Morocco",
+        "City": "Essaouira",
+        "Activity": "Dining on Fresh Fish",
+        "Description": "Enjoy freshly caught seafood at outdoor grill restaurants along the port.",
+        "TypeOfTraveler": "",
+        "Duration": "",
+        "BudgetInUSD": "",
+        "BudgetDetails": "",
+        "TipsAndRecommendations": "Visit early to see the fishermen unload their catch. Try the red mullet and calamari for a delicious experience.",
+        "For": "",
+        "FamilyFriendly": "",
+        "Category": ""
+      },
+      {
+        "Country": "Egypt",
+        "City": "Hurghada",
+        "Activity": "Seafood by the Red Sea",
+        "Description": "Enjoy fresh grilled shrimp, fish, and Egyptian seafood stews.",
+        "TypeOfTraveler": "",
+        "Duration": "",
+        "BudgetInUSD": "",
+        "BudgetDetails": "",
+        "TipsAndRecommendations": "Pair it with a boat tour for the ultimate experience.",
+        "For": "",
+        "FamilyFriendly": "",
+        "Category": ""
+      },
+      {
+        "Country": "Egypt",
+        "City": "Hurghada",
+        "Activity": "El Halaka",
+        "Description": "A local seafood restaurant known for Egyptian-style grilled fish and seafood soup.",
+        "TypeOfTraveler": "",
+        "Duration": "",
+        "BudgetInUSD": "",
+        "BudgetDetails": "",
+        "TipsAndRecommendations": "Their grilled squid is highly recommended.",
+        "For": "",
+        "FamilyFriendly": "",
+        "Category": ""
+      }
+    ]
+  }
+}

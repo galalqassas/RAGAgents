@@ -1,0 +1,52 @@
+{
+  "Restaurant Retrieval Agent": {
+    "restaurants": [
+      {
+        "Country": "Italy",
+        "City": "Rome",
+        "RestaurantName": "La Gensola",
+        "TypeOfCuisine": "Vegetarian",
+        "MealsServed": "Lunch and Dinner",
+        "RecommendedDish": "Vegetarian pizza",
+        "MealDescription": "Fresh vegetables and herbs, served with a side of garlic bread",
+        "AvgPricePerPersonInUSD": "20-30",
+        "BudgetRange": "Moderate",
+        "Suitability": "Family-friendly"
+      }
+    ]
+  },
+  "Visa Information Retrieval Agent": {
+    "visas": [
+      {
+        "Country": "Electronic Visas",
+        "Question": "Are e-visas or online applications available?",
+        "Answer": "Yes, but specific documentation and payment methods may be required."
+      },
+      {
+        "Country": "Requirements",
+        "Question": "What documentation is typically required for a visa?",
+        "Answer": "Personal and biographic information, valid passport, proof of onward travel, and sufficient funds for the duration of stay."
+      },
+      {
+        "Country": "Special Cases",
+        "Question": "Are there any additional documents that may be required?",
+        "Answer": "Yes, health insurance, hotel reservations, or sponsorship letters may be needed in some cases."
+      },
+      {
+        "Country": "Regulations",
+        "Question": "What are some important regulations to keep in mind when traveling visa-free?",
+        "Answer": "Some countries have strict rules regarding visa-free travel."
+      },
+      {
+        "Country": "Transit Visas",
+        "Question": "Do I need a visa for transit purposes?",
+        "Answer": "It depends on the length of stay in the airport's international area and type of flight ticket."
+      },
+      {
+        "Country": "General Information",
+        "Question": "Do most countries require foreign nationals to obtain a visa before entering their territory?",
+        "Answer": "Yes"
+      }
+    ]
+  }
+}

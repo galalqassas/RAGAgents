@@ -1,0 +1,79 @@
+{
+  "Visa Information Retrieval Agent": {
+    "visas": [
+      {
+        "Country": "Croatia",
+        "Question": "How to find and book hotels in Split and Dubrovnik?",
+        "Answer": "Try using popular travel websites or platforms such as Booking.com, Expedia, or Airbnb. You can also use search engines like Google to look for hotel options in these cities."
+      }
+    ]
+  },
+  "Accommodation Retrieval Agent": {
+    "accommodations": [
+      {
+        "Country": "Japan",
+        "City": "Tokyo",
+        "AccommodationName": "Hotel Gajoen Tokyo",
+        "AccommodationDetails": "This hotel is located in the heart of Tokyo and offers stunning views of the city.",
+        "Type": "Hotel",
+        "AvgNightPriceInUSD": "$120"
+      }
+    ]
+  },
+  "Senior RAG Retrieval Agent": {
+    "activities": [
+      {
+        "Country": "Spain",
+        "City": "Seville",
+        "Activity": "See flower-filled courtyards during festival season",
+        "Description": "Similar to the previous activity, this will also allow you to explore traditional Andalusian architecture and enjoy beautiful spring scenery.",
+        "TypeOfTraveler": "Families",
+        "Duration": "2 hours",
+        "BudgetInUSD": "$30-$70",
+        "BudgetDetails": "Tickets for the festival can range from $10 to $20 per person. Guided tours may also be available for an additional fee.",
+        "TipsAndRecommendations": "Be sure to book tickets in advance as they often sell out quickly.",
+        "For": "Family Fun",
+        "FamilyFriendly": "Yes",
+        "Category": "Cultural Experiences"
+      },
+      {
+        "Country": "Spain",
+        "City": "Seville",
+        "Activity": "Explore a Traditional Andalusian Patio During Spring",
+        "Description": "Best enjoyed during the patio festival in May, this activity will allow you to discover traditional architecture and local culture.",
+        "TypeOfTraveler": "Couples",
+        "Duration": "3 hours",
+        "BudgetInUSD": "$50-$100",
+        "BudgetDetails": "Tickets for the festival can range from $10 to $30 per person. Guided tours may also be available for an additional fee.",
+        "TipsAndRecommendations": "Be sure to book tickets in advance as they often sell out quickly.",
+        "For": "Romance",
+        "FamilyFriendly": "No",
+        "Category": "Cultural Experiences"
+      }
+    ]
+  },
+  "Seasonal Information Retrieval Agent": {
+    "seasonals": [
+      {
+        "Country": "Government",
+        "Question": "visa requirements",
+        "Answer": "official government websites"
+      },
+      {
+        "Country": "Embassy",
+        "Question": "",
+        "Answer": "destination country specific requirements"
+      },
+      {
+        "Country": "Lawyer",
+        "Question": "",
+        "Answer": "immigration law specialist"
+      },
+      {
+        "Country": "Travel Agency",
+        "Question": "",
+        "Answer": "reputable travel agencies"
+      }
+    ]
+  }
+}

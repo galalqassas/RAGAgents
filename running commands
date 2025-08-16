@@ -1,0 +1,8 @@
+#ٌrunning commands
+
+!pip install fastapi uvicorn nest-asyncio pyngrok
+
+!ngrok config add-authtoken 2feTTlkc3MwE8uIJWWxU5M4WRVC_7FhdKJQXYdDY7akug4zJn
+
+!ngrok config add-authtoken 2feTTlkc3MwE8uIJWWxU5M4WRVC_7FhdKJQXYdDY7akug4zJn
+!python main.py

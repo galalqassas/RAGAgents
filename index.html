@@ -1,0 +1,80 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title> Personalized Travel Assistant</title>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      background: #f8f9fa;
+      max-width: 600px;
+      margin: 40px auto;
+      padding: 20px;
+      border-radius: 8px;
+      box-shadow: 0 0 10px rgba(0,0,0,0.1);
+    }
+    h2 {
+      color: #2a6edc;
+      margin-bottom: 20px;
+    }
+    input, button {
+      padding: 10px;
+      margin: 10px 0;
+      width: 100%;
+      border-radius: 6px;
+      border: 1px solid #ccc;
+      font-size: 16px;
+    }
+    button {
+      background: #28a745;
+      color: white;
+      font-weight: bold;
+      cursor: pointer;
+      border: none;
+    }
+    pre {
+      background: #eef;
+      padding: 15px;
+      border-radius: 6px;
+      white-space: pre-wrap;
+      word-wrap: break-word;
+    }
+    .error {
+      color: red;
+      font-weight: bold;
+    }
+  </style>
+</head>
+<body>
+
+  <h2> Personalized Travel Assistant</h2>
+
+  <input type="text" id="query" placeholder="e.g., Best restaurants in Cairo" />
+  <button onclick="sendQuery()">Search</button>
+
+  <h3>Results</h3>
+  <pre id="results">Waiting for query...</pre>
+
+  <script>
+    async function sendQuery() {
+      const query = document.getElementById("query").value;
+      const resultsBox = document.getElementById("results");
+      resultsBox.textContent = " Fetching results...";
+
+      const baseUrl = window.location.origin;
+
+      try {
+        // Agent part in path doesn't matter (it's ignored in backend since classification is used)
+        const response = await fetch(`${baseUrl}/api/any?query=${encodeURIComponent(query)}`);
+        if (!response.ok) {
+          throw new Error(`HTTP ${response.status}: ${response.statusText}`);
+        }
+        const data = await response.json();
+        resultsBox.textContent = JSON.stringify(data, null, 2);
+      } catch (error) {
+        resultsBox.innerHTML = `<span class="error"> Error: ${error.message}</span>`;
+      }
+    }
+  </script>
+
+</body>
+</html>

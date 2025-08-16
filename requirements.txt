@@ -1,0 +1,15 @@
+pymongo
+weaviate-client
+sentence-transformers
+crewai
+crewai-tools
+exa-py
+ollama
+langchain
+langchain-community
+langchain-ollama
+fastapi
+uvicorn
+nest-asyncio
+pyngrok
+python-dotenv

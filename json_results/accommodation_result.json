@@ -1,0 +1,12 @@
+{
+  "accommodations": [
+    {
+      "Country": "USA",
+      "City": "New York",
+      "AccommodationName": "Hotel1",
+      "AccommodationDetails": "5-star hotel with amenities",
+      "Type": "hotel",
+      "AvgNightPriceInUSD": "$300"
+    }
+  ]
+}

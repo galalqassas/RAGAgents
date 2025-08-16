@@ -1,0 +1,40 @@
+{
+  "dishes": [
+    {
+      "Country": "Italy",
+      "City": "Various",
+      "DishName": "Cacio e Pepe",
+      "DishDetails": "Spaghetti with Pecorino Romano and black pepper.",
+      "Type": "Vegetarian",
+      "AvgPriceInUSD": "Not specified",
+      "BestFor": "Pasta lovers"
+    },
+    {
+      "Country": "Italy",
+      "City": "Various",
+      "DishName": "Orecchiette alle Cime di Rapa",
+      "DishDetails": "Ear-shaped pasta with turnip greens.",
+      "Type": "Vegetarian",
+      "AvgPriceInUSD": "Not specified",
+      "BestFor": "Pasta lovers who like leafy greens"
+    },
+    {
+      "Country": "Italy",
+      "City": "Various",
+      "DishName": "Panzanella",
+      "DishDetails": "Bread salad with tomatoes and onions.",
+      "Type": "Vegetarian",
+      "AvgPriceInUSD": "Not specified",
+      "BestFor": "Those who love bread salads"
+    },
+    {
+      "Country": "Italy",
+      "City": "Various",
+      "DishName": "Frittatina",
+      "DishDetails": "Fried pasta with béchamel and peas.",
+      "Type": "Vegetarian",
+      "AvgPriceInUSD": "Not specified",
+      "BestFor": "Pasta lovers"
+    }
+  ]
+}

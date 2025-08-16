@@ -1,0 +1,9 @@
+{
+  "visas": [
+    {
+      "Country": "USA",
+      "Question": "Do I need a visa to enter the USA?",
+      "Answer": "Yes, you need a visa to enter the USA."
+    }
+  ]
+}

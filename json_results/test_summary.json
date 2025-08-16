@@ -1,0 +1,22 @@
+{
+  "Query 1": {
+    "Query": "I'm a vegetarian with $50 budget looking for affordable restaurants near tourist attractions in Rome, and need visa information for my US passport. How can I get around the city?",
+    "ResultFile": "json_results/query_result_1.json"
+  },
+  "Query 2": {
+    "Query": "Planning a family trip to Cairo in winter with kids under 10. Need a budget hotel for 5 nights and short family-friendly activities nearby.",
+    "ResultFile": "json_results/query_result_2.json"
+  },
+  "Query 3": {
+    "Query": "What are some authentic quick seafood dishes in Barcelona that I can try in under 2 hours between meetings? How do I get from La Rambla to Sagrada Familia afterward?",
+    "ResultFile": "json_results/query_result_3.json"
+  },
+  "Query 4": {
+    "Query": "As a senior couple traveling to Japan for 2 weeks in cherry blossom season, what visa do we need, where should we stay for under $150/night, and what are some relaxing cultural activities?",
+    "ResultFile": "json_results/query_result_4.json"
+  },
+  "Query 5": {
+    "Query": "I'm planning a 7-day trip to Italy with my vegetarian wife and two children (ages 8 and 12). We need visa information, affordable family-friendly hotels in Rome and Florence, local pasta dishes under \u20ac20, efficient transportation between cities, seasonal events in June, and cultural activities that take less than 3 hours.",
+    "ResultFile": "json_results/query_result_5.json"
+  }
+}

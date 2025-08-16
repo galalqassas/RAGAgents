@@ -1,0 +1,144 @@
+{
+  "Accommodation Retrieval Agent": {
+    "accommodations": [
+      {
+        "Country": "Egypt",
+        "City": "Cairo",
+        "AccommodationName": "Cairo Stars Hostel",
+        "AccommodationDetails": "Budget hostel near Khan Al Khalili, rooftop",
+        "Type": "Hostel",
+        "AvgNightPriceInUSD": "$11"
+      },
+      {
+        "Country": "Egypt",
+        "City": "Cairo",
+        "AccommodationName": "Cairo Downtown Backpackers",
+        "AccommodationDetails": "Lively hostel in the heart of Cairo\u2019s old quarter with shared spaces and a warm local ambiance.",
+        "Type": "Hostel",
+        "AvgNightPriceInUSD": "~$15"
+      },
+      {
+        "Country": "Egypt",
+        "City": "Cairo",
+        "AccommodationName": "Valencia Hotel",
+        "AccommodationDetails": "Budget guesthouse near Egyptian Museum, basic amenities",
+        "Type": "Guesthouse",
+        "AvgNightPriceInUSD": "$25"
+      },
+      {
+        "Country": "Egypt",
+        "City": "Cairo",
+        "AccommodationName": "Nile Riverside Guesthouse",
+        "AccommodationDetails": "Traditional guesthouse on the banks of the Nile, decorated with authentic Egyptian motifs.",
+        "Type": "Guesthouse",
+        "AvgNightPriceInUSD": "~$20"
+      },
+      {
+        "Country": "Egypt",
+        "City": "Cairo",
+        "AccommodationName": "Garden City House",
+        "AccommodationDetails": "Budget guesthouse in Garden City",
+        "Type": "Guesthouse",
+        "AvgNightPriceInUSD": "$20"
+      }
+    ]
+  },
+  "Senior RAG Retrieval Agent": {
+    "activities": [
+      {
+        "Country": "Egypt",
+        "City": "Cairo",
+        "Activity": "Al-Azhar Park",
+        "Description": "A beautifully landscaped park with panoramic views of Cairo, great for picnics and evening strolls.",
+        "TypeOfTraveler": "Family",
+        "Duration": "Full Day",
+        "BudgetInUSD": "Free",
+        "BudgetDetails": "No cost involved",
+        "TipsAndRecommendations": "Enjoy the sunset from the top of the park.",
+        "For": "Everyone",
+        "FamilyFriendly": "Yes",
+        "Category": "Outdoor Activity"
+      },
+      {
+        "Country": "Egypt",
+        "City": "Cairo",
+        "Activity": "Rooftop Dining with Panoramic Views",
+        "Description": "Dine at a rooftop restaurant and enjoy panoramic views of Cairo while savoring delicious food.",
+        "TypeOfTraveler": "Family",
+        "Duration": "Half Day",
+        "BudgetInUSD": "$50-$100",
+        "BudgetDetails": "Meal prices vary depending on the type and quality of food.",
+        "TipsAndRecommendations": "Book a table in advance to ensure availability.",
+        "For": "Everyone",
+        "FamilyFriendly": "Yes",
+        "Category": "Food and Drink"
+      },
+      {
+        "Country": "Egypt",
+        "City": "Cairo",
+        "Activity": "Mogran Family Park",
+        "Description": "A park located at the confluence of the Blue and White Nile, ideal for picnics.",
+        "TypeOfTraveler": "Family",
+        "Duration": "Full Day",
+        "BudgetInUSD": "Free",
+        "BudgetDetails": "No cost involved",
+        "TipsAndRecommendations": "Pack a picnic lunch and enjoy the views.",
+        "For": "Everyone",
+        "FamilyFriendly": "Yes",
+        "Category": "Outdoor Activity"
+      },
+      {
+        "Country": "Egypt",
+        "City": "Cairo",
+        "Activity": "Nile Corniche Stroll",
+        "Description": "A walk along the Nile Corniche to enjoy views of the illuminated Cairo Tower and cityscape.",
+        "TypeOfTraveler": "Family",
+        "Duration": "Half Day",
+        "BudgetInUSD": "Free",
+        "BudgetDetails": "No cost involved",
+        "TipsAndRecommendations": "Take a romantic sunset stroll with family.",
+        "For": "Everyone",
+        "FamilyFriendly": "Yes",
+        "Category": "Outdoor Activity"
+      },
+      {
+        "Country": "Egypt",
+        "City": "Cairo",
+        "Activity": "Nile River Cruise",
+        "Description": "A relaxing cruise with views of Cairo's skyline and historic sites.",
+        "TypeOfTraveler": "Family",
+        "Duration": "Half Day",
+        "BudgetInUSD": "$50-$100",
+        "BudgetDetails": "Ticket prices vary depending on the season and duration of the cruise.",
+        "TipsAndRecommendations": "Enjoy the sunset from the river while learning about Cairo's history.",
+        "For": "Everyone",
+        "FamilyFriendly": "Yes",
+        "Category": "Water Activity"
+      }
+    ]
+  },
+  "Seasonal Information Retrieval Agent": {
+    "seasonals": [
+      {
+        "Country": "Egypt",
+        "Question": "Best Time to Visit:",
+        "Answer": "The best time to visit Cairo is during the spring (March to May) and autumn (September to November), when the weather is mild and pleasant."
+      },
+      {
+        "Country": "Egypt",
+        "Question": "Must-Visit Places:",
+        "Answer": "Pyramids of Giza, The Egyptian Museum, Islamic Cairo"
+      },
+      {
+        "Country": "Egypt",
+        "Question": "Shopping:",
+        "Answer": "Khan el-Khalili Market, Cairo's Markets"
+      },
+      {
+        "Country": "Egypt",
+        "Question": "Food:",
+        "Answer": "Koshari, Ful Medames, Ta'ameya"
+      }
+    ]
+  }
+}

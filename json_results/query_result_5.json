@@ -1,0 +1,118 @@
+{
+  "Visa Information Retrieval Agent": {
+    "visas": [
+      {
+        "Country": "USA",
+        "Question": "Do I need a visa to enter the USA?",
+        "Answer": "Yes, you need a visa to enter the USA."
+      }
+    ]
+  },
+  "Accommodation Retrieval Agent": {
+    "accommodations": [
+      {
+        "Country": "USA",
+        "City": "New York",
+        "AccommodationName": "Hotel1",
+        "AccommodationDetails": "5-star hotel with amenities",
+        "Type": "hotel",
+        "AvgNightPriceInUSD": "$300"
+      }
+    ]
+  },
+  "Dish Retrieval Agent": {
+    "dishes": [
+      {
+        "Country": "Italy",
+        "City": "Various",
+        "DishName": "Cacio e Pepe",
+        "DishDetails": "Spaghetti with Pecorino Romano and black pepper.",
+        "Type": "Vegetarian",
+        "AvgPriceInUSD": "Not specified",
+        "BestFor": "Pasta lovers"
+      },
+      {
+        "Country": "Italy",
+        "City": "Various",
+        "DishName": "Orecchiette alle Cime di Rapa",
+        "DishDetails": "Ear-shaped pasta with turnip greens.",
+        "Type": "Vegetarian",
+        "AvgPriceInUSD": "Not specified",
+        "BestFor": "Pasta lovers who like leafy greens"
+      },
+      {
+        "Country": "Italy",
+        "City": "Various",
+        "DishName": "Panzanella",
+        "DishDetails": "Bread salad with tomatoes and onions.",
+        "Type": "Vegetarian",
+        "AvgPriceInUSD": "Not specified",
+        "BestFor": "Those who love bread salads"
+      },
+      {
+        "Country": "Italy",
+        "City": "Various",
+        "DishName": "Frittatina",
+        "DishDetails": "Fried pasta with b\u00e9chamel and peas.",
+        "Type": "Vegetarian",
+        "AvgPriceInUSD": "Not specified",
+        "BestFor": "Pasta lovers"
+      }
+    ]
+  },
+  "Seasonal Information Retrieval Agent": {
+    "seasonals": [
+      {
+        "Country": "Italy",
+        "Question": "What are some popular activities in Italy?",
+        "Answer": "Visit La Pelosa Beach for crystal-clear water and relaxation, take a private gondola ride through Venice's canals for a romantic experience, explore Parco Sempione & Arco della Pace in Milan for a peaceful walk or picnic."
+      }
+    ]
+  },
+  "Senior RAG Retrieval Agent": {
+    "activities": [
+      {
+        "Country": "Italy",
+        "City": "Venice",
+        "Activity": "Take a gondola ride",
+        "Description": "Experience the romantic canals of Venice.",
+        "TypeOfTraveler": "Romantics",
+        "Duration": "1 hour",
+        "BudgetInUSD": "$80-$120",
+        "BudgetDetails": "Gondola rental, guide",
+        "TipsAndRecommendations": "Book a sunset ride for maximum romance!",
+        "For": "Couples and small groups",
+        "FamilyFriendly": "No",
+        "Category": "Water activities"
+      },
+      {
+        "Country": "Italy",
+        "City": "Milan",
+        "Activity": "Shop at Galleria Vittorio Emanuele II",
+        "Description": "Browse the world's oldest shopping mall.",
+        "TypeOfTraveler": "Fashionistas",
+        "Duration": "2 hours",
+        "BudgetInUSD": "$50-$100",
+        "BudgetDetails": "Shopping, food, drinks",
+        "TipsAndRecommendations": "Try the famous geese statue for good luck!",
+        "For": "Individuals and groups",
+        "FamilyFriendly": "Yes",
+        "Category": "Shopping"
+      },
+      {
+        "Country": "Italy",
+        "City": "Florence",
+        "Activity": "Visit Uffizi Gallery",
+        "Description": "Explore one of the world's oldest and most famous art museums.",
+        "TypeOfTraveler": "Culture lovers",
+        "Duration": "3 hours",
+        "BudgetInUSD": "$20-$30",
+        "BudgetDetails": "Entry fee, guided tour",
+        "TipsAndRecommendations": "Book tickets in advance to avoid long lines.",
+        "For": "Individuals and groups",
+        "FamilyFriendly": "Yes",
+        "Category": "Museum"
+      }
+    ]
+  }
+}

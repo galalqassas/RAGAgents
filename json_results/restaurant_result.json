@@ -1,0 +1,28 @@
+{
+  "restaurants": [
+    {
+      "Country": "Spain",
+      "City": "Barcelona",
+      "RestaurantName": "Street Stall - Eixample",
+      "TypeOfCuisine": "Spanish",
+      "MealsServed": "Breakfast, Lunch, Dinner",
+      "RecommendedDish": "Patatas Bravas",
+      "MealDescription": "Spicy fried potatoes with a side of garlic mayonnaise",
+      "AvgPricePerPersonInUSD": "$15-$30",
+      "BudgetRange": "Moderate",
+      "Suitability": "Casual"
+    },
+    {
+      "Country": "Spain",
+      "City": "Barcelona",
+      "RestaurantName": "Cal Pep",
+      "TypeOfCuisine": "Spanish",
+      "MealsServed": "Lunch, Dinner",
+      "RecommendedDish": "Gambas al Ajillo",
+      "MealDescription": "Garlic shrimp with a side of crusty bread",
+      "AvgPricePerPersonInUSD": "$20-$40",
+      "BudgetRange": "Moderate to Expensive",
+      "Suitability": "Romantic"
+    }
+  ]
+}

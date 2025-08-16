@@ -1,0 +1,919 @@
+openapi: 3.0.0
+info:
+  title: Agentic RAG Crew - Internal API Documentation
+  version: 1.0.0
+  description: >
+    Documentation for the core Python functions and classes acting as internal APIs
+    for the RAG agent system. **Note:** These are conceptual representations of Python
+    functions, not actual HTTP endpoints. Use by importing and calling the Python code directly.
+  contact:
+    name: Project Maintainer
+    email: your-email@example.com # Optional: Add contact info
+  # license: # Optional: Add license info
+  #   name: MIT
+  #   url: https://opensource.org/licenses/MIT
+
+tags:
+  - name: Core Workflow
+    description: Main entry points and orchestration logic.
+  - name: Utilities
+    description: Helper functions like classification and filter extraction.
+  - name: Data Access
+    description: Functions for interacting with data sources (Weaviate, MongoDB).
+
+paths:
+  /run_task:
+    post:
+      tags:
+        - Core Workflow
+      operationId: runTaskByClassifiedIntent
+      summary: Run RAG Task by Classified Intent
+      description: >
+        Orchestrates the RAG process: classifies intent, extracts filters, delegates to agents,
+        retrieves/ranks data, and returns results. Corresponds to `crew.AgenticRagCrew.run_task_by_classified_intent`.
+        
+        **Note:** This is internal Python function logic, not directly exposed as an HTTP endpoint.
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                query:
+                  type: string
+                  description: The natural language user query.
+                  example: "I need a cheap vegetarian restaurant in Rome and visa info for Italy."
+                filters:
+                  type: object
+                  description: (Optional) Pre-extracted filters. If not provided, they will be extracted from the query using `extract_filters_from_query`.
+                  $ref: '#/components/schemas/FiltersInput'
+            examples:
+              multipleIntents:
+                summary: Query with multiple intents
+                value:
+                  query: "I need a cheap vegetarian restaurant in Rome and visa info for Italy."
+                  filters: {
+                    "budget": "low",
+                    "dietary": "vegetarian",
+                    "city": "Rome",
+                    "country": "Italy"
+                  }
+              singleIntent:
+                summary: Query with single intent
+                value:
+                  query: "What is the visa requirement for US citizens traveling to Italy?"
+      responses:
+        '200':
+          description: Successfully processed the query and returned results.
+          content:
+            application/json:
+              schema:
+                type: object
+                description: >
+                  A dictionary where keys are agent roles and values are the structured results
+                  corresponding to the intent handled by that agent (e.g., AccommodationOutput, VisaOutput).
+              examples:
+                successResponse:
+                  summary: Successful response with multiple intents
+                  value: {
+                    "Visa Information Retrieval Agent": {
+                      "visas": [
+                        {
+                          "Country": "Italy",
+                          "Question": "What are the main points about Italy visa requirements?",
+                          "Answer": "The main points about Italy visa requirements include having a valid passport, meeting specific health and security criteria, obtaining an electronic travel authorization (ETIAS), and applying for the appropriate visa type based on purpose of stay."
+                        }
+                      ]
+                    },
+                    "Restaurant Retrieval Agent": {
+                      "restaurants": [
+                        {
+                          "Country": "Italy",
+                          "City": "Rome",
+                          "RestaurantName": "Trattoria Roma",
+                          "TypeOfCuisine": "Italian",
+                          "MealsServed": "Pasta,Dinner",
+                          "RecommendedDish": "Spaghetti Carbonara",
+                          "MealDescription": "Freshly made spaghetti with bacon and eggs",
+                          "AvgPricePerPersonInUSD": "5-7",
+                          "BudgetRange": "Under 10 euros",
+                          "Suitability": "Vegetarian,Gluten-free"
+                        }
+                      ]
+                    }
+                  }
+        '400':
+          $ref: '#/components/responses/BadRequest'
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+        '404':
+          $ref: '#/components/responses/NotFound'
+        '500':
+          $ref: '#/components/responses/InternalServerError'
+
+  /classify_intent:
+    post:
+      tags:
+        - Utilities
+      operationId: classifyQueryIntent
+      summary: Classify Query Intent
+      description: >
+        Classifies a query into predefined categories using Ollama. Corresponds to `tools.classifier.classify_query_intent`.
+        
+        **Note:** This is internal Python function logic, not directly exposed as an HTTP endpoint.
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              required: [query]
+              properties:
+                query:
+                  type: string
+                  description: The user's input query.
+                  example: "Tell me about hotels and scams in Paris."
+      responses:
+        '200':
+          description: Intent classified successfully.
+          content:
+            application/json:
+              schema:
+                oneOf:
+                  - type: string
+                    description: A single classified intent category.
+                    example: "visa"
+                  - type: array
+                    items:
+                      type: string
+                    description: A list of classified intent categories.
+                    example: ["accommodation", "scam"]
+                  - type: string
+                    description: Returned if classification fails or no relevant category is found.
+                    example: "unknown"
+              examples:
+                singleIntent:
+                  summary: Single intent classification
+                  value: "accommodation"
+                multipleIntents:
+                  summary: Multiple intent classification
+                  value: ["accommodation", "scam"]
+                unknownIntent:
+                  summary: Unknown intent
+                  value: "unknown"
+        '500':
+          $ref: '#/components/responses/InternalServerError'
+
+  /extract_filters:
+    post:
+      tags:
+        - Utilities
+      operationId: extractFiltersFromQuery
+      summary: Extract Filters from Query
+      description: >
+        Uses Google Gemini to extract structured filters from a query. Corresponds to `crew.AgenticRagCrew.extract_filters_from_query`.
+        
+        **Note:** This is internal Python function logic, not directly exposed as an HTTP endpoint.
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              required: [query]
+              properties:
+                query:
+                  type: string
+                  description: The natural language user query.
+                  example: "cheap vegan food in Paris, France"
+      responses:
+        '200':
+          description: Filters extracted successfully.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/FiltersOutput'
+              examples:
+                foodExample:
+                  summary: Food query filters
+                  value: {
+                    "budget": "low", 
+                    "dietary": "vegan", 
+                    "country": "France", 
+                    "city": "Paris", 
+                    "type": "restaurant"
+                  }
+                accommodationExample:
+                  summary: Accommodation query filters
+                  value: {
+                    "budget": "moderate", 
+                    "country": "Japan", 
+                    "city": "Tokyo", 
+                    "type": "hotel", 
+                    "duration": "2 weeks"
+                  }
+        '400':
+          $ref: '#/components/responses/BadRequest'
+        '500':
+          $ref: '#/components/responses/InternalServerError'
+
+  /weaviate_search:
+    post:
+      tags:
+        - Data Access
+      operationId: weaviateVectorSearch
+      summary: Search Weaviate Database (Conceptual Tool Endpoint)
+      description: >
+        Performs vector search on a Weaviate collection based on query keywords. Dynamically selects collection.
+        Corresponds to the logic within `tools.activity_seach_tool.WeaviateTool._run`. 
+        
+        **Note:** This is internal tool logic, not directly exposed as an HTTP endpoint.
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              required: [query]
+              properties:
+                query:
+                  type: string
+                  description: Query containing keywords for collection selection and search.
+                  example: "find activities in Cairo"
+      responses:
+        '200':
+          description: Search completed successfully. Returns results based on the detected collection.
+          content:
+            application/json:
+              schema:
+                type: object
+                description: >
+                  JSON object where the key is the collection name (lowercase) and the value is a list of results.
+                  The structure of results depends on the collection (e.g., list of Activity, Restaurant).
+              examples:
+                activityResults:
+                  summary: Activity search results
+                  value: {
+                    "activities": [
+                      {
+                        "Country": "Egypt",
+                        "City": "Cairo",
+                        "Activity": "Pyramids of Giza",
+                        "Description": "Explore the ancient pyramids and learn about Egyptian history",
+                        "TypeOfTraveler": "Family",
+                        "Duration": "Half day",
+                        "BudgetInUSD": "$20-$50",
+                        "BudgetDetails": "Entrance fees, guide service",
+                        "TipsAndRecommendations": "Bring sun protection, wear comfortable shoes",
+                        "For": "Kids under 10",
+                        "FamilyFriendly": "Yes",
+                        "Category": "History"
+                      }
+                    ]
+                  }
+                restaurantResults:
+                  summary: Restaurant search results
+                  value: {
+                    "restaurants": [
+                      {
+                        "Country": "Italy",
+                        "City": "Rome",
+                        "RestaurantName": "Trattoria Roma",
+                        "TypeOfCuisine": "Italian",
+                        "MealsServed": "Pasta,Dinner",
+                        "RecommendedDish": "Spaghetti Carbonara",
+                        "MealDescription": "Freshly made spaghetti with bacon and eggs",
+                        "AvgPricePerPersonInUSD": "5-7",
+                        "BudgetRange": "Under 10 euros",
+                        "Suitability": "Vegetarian,Gluten-free"
+                      }
+                    ]
+                  }
+        '400':
+          $ref: '#/components/responses/BadRequest'
+        '500':
+          $ref: '#/components/responses/InternalServerError'
+
+  /mongodb_get_data/{database_name}/{collection_name}:
+    get:
+      tags:
+        - Data Access
+      operationId: getDataFromMongoDBCollection
+      summary: Get Data from MongoDB Collection (Conceptual Helper)
+      description: >
+        Retrieves all documents from a MongoDB collection. Corresponds to `tools.mongodb_tools.get_data_from_collection.get_data_from_mongodb_collection`.
+        
+        **Note:** This is internal Python function logic, not directly exposed as an HTTP endpoint.
+      parameters:
+        - name: database_name
+          in: path
+          required: true
+          schema: { type: string }
+          description: The name of the MongoDB database. Example values include "travel_data", "user_data", etc.
+          example: "travel_data"
+        - name: collection_name
+          in: path
+          required: true
+          schema: { type: string }
+          description: The name of the MongoDB collection. Example values include "restaurants", "activities", "accommodations", etc.
+          example: "restaurants"
+      responses:
+        '200':
+          description: Data retrieved successfully.
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  type: object
+                  additionalProperties: true
+                description: A list of documents from the collection (excluding _id).
+              example: [
+                {
+                  "Country": "Italy",
+                  "City": "Rome",
+                  "RestaurantName": "Trattoria Roma",
+                  "TypeOfCuisine": "Italian",
+                  "MealsServed": "Pasta,Dinner",
+                  "RecommendedDish": "Spaghetti Carbonara",
+                  "MealDescription": "Freshly made spaghetti with bacon and eggs",
+                  "AvgPricePerPersonInUSD": "5-7",
+                  "BudgetRange": "Under 10 euros",
+                  "Suitability": "Vegetarian,Gluten-free"
+                }
+              ]
+        '404':
+          $ref: '#/components/responses/NotFound'
+        '500':
+          $ref: '#/components/responses/InternalServerError'
+
+components:
+  responses:
+    BadRequest:
+      description: Bad request error. The request was improperly formatted or contained invalid parameters.
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/Error'
+          example:
+            error: "Invalid query format. The query parameter is required."
+    
+    Unauthorized:
+      description: Unauthorized error. Authentication is required and has failed or has not been provided.
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/Error'
+          example:
+            error: "Authentication required to access this resource."
+    
+    NotFound:
+      description: Not found error. The requested resource could not be found.
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/Error'
+          example:
+            error: "The requested database or collection could not be found."
+    
+    InternalServerError:
+      description: Internal server error. An unexpected error occurred while processing the request.
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/Error'
+          example:
+            error: "An unexpected error occurred. Please try again later or contact support."
+
+  schemas:
+    # --- Input Schemas ---
+    FiltersInput:
+      type: object
+      properties:
+        budget:
+          type: string
+          nullable: true
+          description: Budget preference (low, medium, high) or specific price range.
+          example: "low"
+        dietary:
+          type: string
+          nullable: true
+          description: Dietary restrictions or preferences (vegetarian, vegan, gluten-free, etc.).
+          example: "vegetarian"
+        country:
+          type: string
+          nullable: true
+          description: Target country for the search.
+          example: "Italy"
+        city:
+          type: string
+          nullable: true
+          description: Target city for the search.
+          example: "Rome"
+        type:
+          type: string
+          nullable: true
+          description: Type of service or establishment being searched for.
+          example: "restaurant"
+        duration:
+          type: string
+          nullable: true
+          description: Time duration for activities or length of stay.
+          example: "2 hours"
+        suitability:
+          type: string
+          nullable: true
+          description: Who the service is suitable for (families, couples, solo travelers, etc.).
+          example: "family-friendly"
+      additionalProperties: true
+      description: Optional filters provided in the request for `/run_task`. These filters help narrow down search results.
+
+    FiltersOutput:
+      type: object
+      properties:
+        budget:
+          type: string
+          nullable: true
+          description: Budget preference (low, medium, high) or specific price range extracted from the query.
+        dietary:
+          type: string
+          nullable: true
+          description: Dietary restrictions or preferences (vegetarian, vegan, gluten-free, etc.) extracted from the query.
+        country:
+          type: string
+          nullable: true
+          description: Target country extracted from the query.
+        city:
+          type: string
+          nullable: true
+          description: Target city extracted from the query.
+        type:
+          type: string
+          nullable: true
+          description: Type of service or establishment extracted from the query.
+        duration:
+          type: string
+          nullable: true
+          description: Time duration for activities or length of stay extracted from the query.
+        suitability:
+          type: string
+          nullable: true
+          description: Who the service is suitable for (families, couples, solo travelers, etc.) extracted from the query.
+      additionalProperties: true
+      description: Filters extracted from the query by `/extract_filters`. These are automatically identified preferences and constraints.
+      example: {"budget": "low", "dietary": "vegan", "country": "France", "city": "Paris", "type": "restaurant"}
+
+    # --- Individual Item Schemas (Based on Pydantic models in crew.py) ---
+    SingleAccommodation:
+      type: object
+      properties:
+        Country:
+          type: string
+          description: The country where the accommodation is located.
+          example: "Japan"
+        City:
+          type: string
+          description: The city where the accommodation is located.
+          example: "Tokyo"
+        AccommodationName:
+          type: string
+          description: The name of the hotel, hostel, or other accommodation.
+          example: "Sakura Hotel"
+        AccommodationDetails:
+          type: string
+          description: Additional details about the accommodation including amenities, location benefits, etc.
+          example: "Modern hotel with free WiFi, close to major attractions"
+        Type:
+          type: string
+          description: The type of accommodation (hotel, hostel, guesthouse, etc.).
+          example: "Hotel"
+        AvgNightPriceInUSD:
+          type: string
+          description: The average price per night in USD. May be a range or single value.
+          example: "$120-150"
+      required: [Country, City, AccommodationName, AccommodationDetails, Type, AvgNightPriceInUSD]
+
+    SingleActivity:
+      type: object
+      properties:
+        Country:
+          type: string
+          description: The country where the activity takes place.
+          example: "Egypt"
+        City:
+          type: string
+          description: The city where the activity takes place.
+          example: "Cairo"
+        Activity:
+          type: string
+          description: The name of the activity.
+          example: "Pyramids of Giza Tour"
+        Description:
+          type: string
+          description: A detailed description of what the activity involves.
+          example: "Guided tour of the ancient pyramids with historical context and photo opportunities"
+        TypeOfTraveler:
+          type: string
+          description: The type of traveler this activity is best suited for.
+          example: "Family"
+        Duration:
+          type: string
+          description: How long the activity typically takes to complete.
+          example: "Half day"
+        BudgetInUSD:
+          type: string
+          description: Cost of the activity in USD. May be a range or single value.
+          example: "$20-$50"
+        BudgetDetails:
+          type: string
+          description: Details about what the cost includes or excludes.
+          example: "Entrance fees, guide service, excludes transportation"
+        TipsAndRecommendations:
+          type: string
+          description: Helpful tips for visitors planning to do this activity.
+          example: "Bring sun protection, wear comfortable shoes, arrive early to avoid crowds"
+        For:
+          type: string
+          description: Specific audience this activity is designed for.
+          example: "History enthusiasts"
+        FamilyFriendly:
+          type: string
+          description: Whether the activity is suitable for families with children.
+          example: "Yes"
+        Category:
+          type: string
+          description: The category or type of activity (cultural, adventure, etc.).
+          example: "History"
+      required: [Country, City, Activity, Description, TypeOfTraveler, Duration, BudgetInUSD, BudgetDetails, TipsAndRecommendations, "For", FamilyFriendly, Category]
+
+    SingleDish:
+      type: object
+      properties:
+        Country:
+          type: string
+          description: The country where this dish is from.
+          example: "Italy"
+        City:
+          type: string
+          description: The city or region where this dish is typically found.
+          example: "Rome"
+        DishName:
+          type: string
+          description: The name of the dish.
+          example: "Carbonara"
+        DishDetails:
+          type: string
+          description: A detailed description of the dish including ingredients and preparation.
+          example: "Classic Roman pasta dish made with eggs, cheese, pancetta, and black pepper"
+        Type:
+          type: string
+          description: The type of dish (appetizer, main course, dessert, etc.).
+          example: "Main Course"
+        AvgPriceInUSD:
+          type: string
+          description: The average price of the dish in USD. May be a range or single value.
+          example: "$12-15"
+        BestFor:
+          type: string
+          description: The best time or occasion to enjoy this dish.
+          example: "Dinner"
+      required: [Country, City, DishName, DishDetails, Type, AvgPriceInUSD, BestFor]
+
+    SingleRestaurant:
+      type: object
+      properties:
+        Country:
+          type: string
+          description: The country where the restaurant is located.
+          example: "Italy"
+        City:
+          type: string
+          description: The city where the restaurant is located.
+          example: "Rome"
+        RestaurantName:
+          type: string
+          description: The name of the restaurant.
+          example: "Trattoria da Luigi"
+        TypeOfCuisine:
+          type: string
+          description: The type of cuisine served at the restaurant.
+          example: "Italian"
+        MealsServed:
+          type: string
+          description: The types of meals served (breakfast, lunch, dinner, etc.).
+          example: "Lunch,Dinner"
+        RecommendedDish:
+          type: string
+          description: A popular or signature dish recommended at this restaurant.
+          example: "Spaghetti Carbonara"
+        MealDescription:
+          type: string
+          description: A detailed description of the recommended dish.
+          example: "Traditional Roman pasta with eggs, cheese, and pancetta"
+        AvgPricePerPersonInUSD:
+          type: string
+          description: The average price per person in USD. May be a range or single value.
+          example: "$25-35"
+        BudgetRange:
+          type: string
+          description: The general cost category of the restaurant.
+          example: "Mid-range"
+        Suitability:
+          type: string
+          description: Who the restaurant is suitable for (families, couples, vegetarians, etc.).
+          example: "Vegetarian,Family-friendly"
+      required: [Country, City, RestaurantName, TypeOfCuisine, MealsServed, RecommendedDish, MealDescription, AvgPricePerPersonInUSD, BudgetRange, Suitability]
+
+    SingleScam:
+      type: object
+      properties:
+        Country:
+          type: string
+          description: The country where this scam is commonly reported.
+          example: "Italy"
+        City:
+          type: string
+          description: The city where this scam is commonly reported.
+          example: "Rome"
+        ScamType:
+          type: string
+          description: The type or category of scam.
+          example: "Friendship Bracelet Scam"
+        Description:
+          type: string
+          description: A detailed description of how the scam operates.
+          example: "Someone approaches offering a 'free' friendship bracelet, then demands payment after tying it on your wrist"
+        Location:
+          type: string
+          description: Specific locations where this scam is common.
+          example: "Near major tourist attractions like the Colosseum"
+        PreventionTips:
+          type: string
+          description: Advice on how to avoid falling victim to this scam.
+          example: "Firmly decline any 'free' items, keep walking, don't engage with persistent vendors"
+      required: [Country, City, ScamType, Description, Location, PreventionTips]
+
+    SingleSeasonal:
+      type: object
+      properties:
+        Country:
+          type: string
+          description: The country the seasonal information relates to.
+          example: "Japan"
+        Question:
+          type: string
+          description: A specific question about seasonal events or optimal travel times.
+          example: "When is the best time to see cherry blossoms in Japan?"
+        Answer:
+          type: string
+          description: The detailed answer to the seasonal question.
+          example: "Cherry blossoms typically bloom in late March to early April in Tokyo and Kyoto, with the peak lasting only about a week. The exact timing varies each year based on weather conditions."
+      required: [Country, Question, Answer]
+
+    SingleTransportation:
+      type: object
+      properties:
+        Country:
+          type: string
+          description: The country where this transportation option is available.
+          example: "Spain"
+        From:
+          type: string
+          description: The starting point of the transportation route.
+          example: "Barcelona"
+        To:
+          type: string
+          description: The destination point of the transportation route.
+          example: "Madrid"
+        TransportMode:
+          type: string
+          description: The type of transportation (train, bus, ferry, etc.).
+          example: "High-speed train"
+        Provider:
+          type: string
+          description: The company or organization providing the transportation service.
+          example: "Renfe AVE"
+        Schedule:
+          type: string
+          description: Information about departure times and frequency.
+          example: "Hourly departures from 6:00 AM to 9:00 PM"
+        RouteInfo:
+          type: string
+          description: Details about the route, including stops or transfer points.
+          example: "Direct route with no transfers"
+        DurationInHours:
+          type: string
+          description: How long the journey takes.
+          example: "2.5"
+        PriceRangeInUSD:
+          type: string
+          description: The price range for tickets in USD.
+          example: "$60-120"
+        CostDetailsAndOptions:
+          type: string
+          description: Additional information about pricing tiers and discount options.
+          example: "Economy class: $60-80, Business class: $100-120. Discounts available for advance booking."
+        AdditionalInfo:
+          type: string
+          description: Any other relevant information about this transportation option.
+          example: "Onboard WiFi available. Reservation recommended, especially during peak season."
+      required: [Country, From, To, TransportMode, Provider, Schedule, RouteInfo, DurationInHours, PriceRangeInUSD, CostDetailsAndOptions, AdditionalInfo]
+
+    SingleVisa:
+      type: object
+      properties:
+        Country:
+          type: string
+          description: The country for which visa information is provided.
+          example: "Italy"
+        Question:
+          type: string
+          description: A specific question about visa requirements.
+          example: "What are the main points about Italy visa requirements?"
+        Answer:
+          type: string
+          description: The detailed answer to the visa question.
+          example: "The main points about Italy visa requirements include having a valid passport, meeting specific health and security criteria, obtaining an electronic travel authorization (ETIAS), and applying for the appropriate visa type based on purpose of stay."
+      required: [Country, Question, Answer]
+
+    # --- Output Wrapper Schemas (Based on Pydantic models in crew.py) ---
+    AccommodationOutput:
+      type: object
+      properties:
+        accommodations:
+          type: array
+          items: { $ref: '#/components/schemas/SingleAccommodation' }
+          description: List of accommodation results matching the query criteria.
+      required: [accommodations]
+      example:
+        accommodations: [
+          {
+            "Country": "Japan",
+            "City": "Tokyo",
+            "AccommodationName": "Sakura Hotel",
+            "AccommodationDetails": "Modern hotel with free WiFi, close to major attractions",
+            "Type": "Hotel",
+            "AvgNightPriceInUSD": "$120-150"
+          }
+        ]
+
+    ActivityOutput:
+      type: object
+      properties:
+        activities:
+          type: array
+          items: { $ref: '#/components/schemas/SingleActivity' }
+          description: List of activity results matching the query criteria.
+      required: [activities]
+      example:
+        activities: [
+          {
+            "Country": "Egypt",
+            "City": "Cairo",
+            "Activity": "Pyramids of Giza Tour",
+            "Description": "Guided tour of the ancient pyramids with historical context",
+            "TypeOfTraveler": "Family",
+            "Duration": "Half day",
+            "BudgetInUSD": "$20-$50",
+            "BudgetDetails": "Entrance fees, guide service",
+            "TipsAndRecommendations": "Bring sun protection, wear comfortable shoes",
+            "For": "History enthusiasts",
+            "FamilyFriendly": "Yes",
+            "Category": "History"
+          }
+        ]
+
+    DishOutput:
+      type: object
+      properties:
+        dishes:
+          type: array
+          items: { $ref: '#/components/schemas/SingleDish' }
+          description: List of dish results matching the query criteria.
+      required: [dishes]
+      example:
+        dishes: [
+          {
+            "Country": "Italy",
+            "City": "Rome",
+            "DishName": "Carbonara",
+            "DishDetails": "Classic Roman pasta dish made with eggs, cheese, pancetta, and black pepper",
+            "Type": "Main Course",
+            "AvgPriceInUSD": "$12-15",
+            "BestFor": "Dinner"
+          }
+        ]
+
+    RestaurantOutput:
+      type: object
+      properties:
+        restaurants:
+          type: array
+          items: { $ref: '#/components/schemas/SingleRestaurant' }
+          description: List of restaurant results matching the query criteria.
+      required: [restaurants]
+      example:
+        restaurants: [
+          {
+            "Country": "Italy",
+            "City": "Rome",
+            "RestaurantName": "Trattoria Roma",
+            "TypeOfCuisine": "Italian",
+            "MealsServed": "Pasta,Dinner",
+            "RecommendedDish": "Spaghetti Carbonara",
+            "MealDescription": "Freshly made spaghetti with bacon and eggs",
+            "AvgPricePerPersonInUSD": "5-7",
+            "BudgetRange": "Under 10 euros",
+            "Suitability": "Vegetarian,Gluten-free"
+          }
+        ]
+
+    ScamOutput:
+      type: object
+      properties:
+        scams:
+          type: array
+          items: { $ref: '#/components/schemas/SingleScam' }
+          description: List of scam warnings matching the query criteria.
+      required: [scams]
+      example:
+        scams: [
+          {
+            "Country": "Italy",
+            "City": "Rome",
+            "ScamType": "Friendship Bracelet Scam",
+            "Description": "Someone approaches offering a 'free' friendship bracelet, then demands payment after tying it on your wrist",
+            "Location": "Near major tourist attractions like the Colosseum",
+            "PreventionTips": "Firmly decline any 'free' items, keep walking, don't engage with persistent vendors"
+          }
+        ]
+
+    SeasonalOutput:
+      type: object
+      properties:
+        seasonals:
+          type: array
+          items: { $ref: '#/components/schemas/SingleSeasonal' }
+          description: List of seasonal information results matching the query criteria.
+      required: [seasonals]
+      example:
+        seasonals: [
+          {
+            "Country": "Japan",
+            "Question": "When is the best time to see cherry blossoms in Japan?",
+            "Answer": "Cherry blossoms typically bloom in late March to early April in Tokyo and Kyoto, with the peak lasting only about a week."
+          }
+        ]
+
+    TransportationOutput:
+      type: object
+      properties:
+        transportations:
+          type: array
+          items: { $ref: '#/components/schemas/SingleTransportation' }
+          description: List of transportation options matching the query criteria.
+      required: [transportations]
+      example:
+        transportations: [
+          {
+            "Country": "Spain",
+            "From": "Barcelona",
+            "To": "Madrid",
+            "TransportMode": "High-speed train",
+            "Provider": "Renfe AVE",
+            "Schedule": "Hourly departures from 6:00 AM to 9:00 PM",
+            "RouteInfo": "Direct route with no transfers",
+            "DurationInHours": "2.5",
+            "PriceRangeInUSD": "$60-120",
+            "CostDetailsAndOptions": "Economy class: $60-80, Business class: $100-120. Discounts available for advance booking.",
+            "AdditionalInfo": "Onboard WiFi available. Reservation recommended, especially during peak season."
+          }
+        ]
+
+    VisaOutput:
+      type: object
+      properties:
+        visas:
+          type: array
+          items: { $ref: '#/components/schemas/SingleVisa' }
+          description: List of visa information results matching the query criteria.
+      required: [visas]
+      example:
+        visas: [
+          {
+            "Country": "Italy",
+            "Question": "What are the main points about Italy visa requirements?",
+            "Answer": "The main points about Italy visa requirements include having a valid passport, meeting specific health and security criteria, obtaining an electronic travel authorization (ETIAS), and applying for the appropriate visa type based on purpose of stay."
+          }
+        ]
+
+    # --- General Schemas ---
+    Error:
+      type: object
+      properties:
+        error:
+          type: string
+          description: A message describing the error.
+      required: [error]
+      example: { "error": "Query did not match any known collections." }

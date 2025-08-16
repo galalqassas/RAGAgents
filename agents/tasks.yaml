@@ -1,0 +1,38 @@
+fetch_activity_data_task:
+  description: >
+    Find the relevant Activities data according to the question: {query}
+    You can use the WeaviateTool to find the relevant data.
+    You need to provide the query and generate an appropriate question for the WeaviateTool.
+  expected_output: >
+    The relevant Activities data according to the question and the query.
+
+fetch_dish_data_task:
+  description: >
+    Find relevant dish information based on the query: {query}.
+    You can use the WeaviateTool to get relevant data.
+  expected_output: >
+    The relevant dishes with details like type, average price, and best occasions.
+
+fetch_restaurant_data_task:
+  description: >
+    Find restaurant information based on the query: {query}.
+    You can use the WeaviateTool to get restaurant details.
+    Provide results like cuisine, budget, meal types, and dish suggestions.
+  expected_output: >
+    A list of restaurants that match the query with cuisine type, price range, and other dining details.
+
+fetch_scam_data_task:
+  description: >
+    Find information about common scams and safety concerns based on the query: {query}.
+    You can use the WeaviateTool to get scam details and safety tips.
+    Provide information about types of scams, locations where they occur, and prevention advice.
+  expected_output: >
+    A list of common scams in the queried location with descriptions and prevention tips to help travelers stay safe.
+
+fetch_accommodation_data_task:
+  description: >
+    Find the relevant Accommodation data according to the question: {query}
+    You can use the WeaviateTool to find the relevant data.
+    You need to provide the query and generate an appropriate question for the WeaviateTool.
+  expected_output: >
+    The relevant Accommodation data according to the question and the query.
